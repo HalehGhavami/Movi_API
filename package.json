@@ -20,5 +20,8 @@
   "homepage": "https://github.com/HalehGhavami/Movi_API#readme",
   "dependencies": {
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "eslint": "^7.25.0"
   }
 }
