@@ -84,6 +84,12 @@ app.use((err, req, res, next) => {
 });
 
 // listen for requests
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+// app.listen(8080, () => {
+//   console.log('Your app is listening on port 8080.');
+// });
+
+// determine the port to listen on by checking PORT first and giving it a value
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log(`Your app is listening on port ${port}`);
 });
