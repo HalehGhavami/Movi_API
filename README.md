@@ -1,7 +1,7 @@
-# Movi_API
+# movie_API
 
 ### Objective
-To build the server-side component of a “movies” web application. The web
+To build the **server-side** component of a “movies” **web application**. The web
 application will provide users with access to information about different
 movies, directors, and genres. Users will be able to sign up, update their
 personal information, and create a list of their favorite movies
@@ -12,13 +12,13 @@ can learn more about movies I’ve watched or am interested in.
 + As a user, I want to be able to create a profile so I can save data about my favorite movies
 
 ### Technical Requirements
-+ The API must be a Node.js and Express application.
-+ The API must use REST architecture, with URL endpoints corresponding to the data
++ The API must be a **Node.js** and Express application.
++ The API must use **REST** architecture, with URL endpoints corresponding to the data
 operations listed above
-+ The API must use at least three middleware modules, such as the body-parser package for
++ The API must use at least three **middleware modules**, such as the body-parser package for
 reading data from requests and morgan for logging.
 + The API must use a “package.json” file.
-+ The database must be built using MongoDB.
++ The database must be built using **MongoDB**.
 + The business logic must be modeled with Mongoose.
 + The API must provide movie information in JSON format.
 + The JavaScript code must be error-free.
