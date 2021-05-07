@@ -1,81 +1,41 @@
-// To import express into my package
-const express = require('express');
+// import packages
+const express = require('express'),
+  bodyParser = require('body-parser'),
+  uuid = require('uuid');
 
-// To import morgan into my package
+// import morgan into my package
 const morgan = require('morgan');
 
-// This variable is what I’ll use to route my HTTP requests and responses
 const app = express();
 
-// Invoke Morgan middleware function
-app.use(morgan('common'));
+const movies = [
+  {
+    title: 'Amadeus',
+    description:
+      'The film follows a fictional rivalry between Mozart and Italian composer Antonio Salieri at the court of Emperor Joseph II',
+    director: 'Milos Forman',
+    genres: [' Biography', 'Drama', 'History', 'Music'],
 
-// Data Top Ten movies
-const topTenMovies = [
-  {
-    title: 'Soul',
-    director: 'Pete Docter',
-    releaseDate: 2020,
-  },
-  {
-    title: 'Together Together',
-    director: 'Nikole Beckwith',
-    releaseDate: 2021,
-  },
-  {
-    title: 'Portrait of a Lady on Fire',
-    director: 'Céline Sciamma',
-    releaseDate: 2019,
-  },
-  {
-    title: 'Little Women',
-    director: 'Greta Gerwig',
-    releaseDate: 2019,
-  },
-  {
-    title: 'Arrival',
-    director: 'Denis Villeneuve',
-    releaseDate: 2016,
+    image:
+      'https://www.amadeus-live.com/wp-content/uploads/2015/10/main-home-image5.jpg',
   },
   {
     title: 'Rebecca',
+
+    description: 'The film is a gothic tale shot in black-and-white.',
     director: 'Alfred Hitchcock',
-    releaseDate: 1940,
-  },
-  {
-    title: 'The Banker',
-    director: 'George Nolfi',
-    releaseDate: 2020,
-  },
-  {
-    title: 'Amadeus',
-    director: 'Milos Forman',
-    releaseDate: 1984,
-  },
-  {
-    title: 'Borat Subsequent Moviefilm',
-    director: 'Jason Woliner',
-    releaseDate: 2020,
-  },
-  {
-    title: 'Knives Out',
-    director: 'Rian Johnson',
-    releaseDate: 2019,
+    genres: 'Romance',
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Rebecca_%281939_poster%29.jpeg/1200px-Rebecca_%281939_poster%29.jpeg',
   },
 ];
 
-// Express GET route located at the endpoint “/movies” that returns a JSON object containing data about my top 10 movies
-app.get('/movies', (req, res) => {
-  res.json(topTenMovies);
-});
+//  middleware
+app.use(morgan('common'));
 
-// another GET route located at the endpoint “/” that returns a default textual response
-app.get('/', (req, res) => {
-  res.send('Welcome to myFlix!');
-});
-
-// Serving static files
 app.use(express.static('public'));
+
+app.use(bodyParser.json());
 
 // error-handling middleware function that will log all application-level errors to the terminal.
 app.use((err, req, res, next) => {
@@ -83,12 +43,56 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-// listen for requests
-// app.listen(8080, () => {
-//   console.log('Your app is listening on port 8080.');
-// });
+//  GET
+app.get('/', (req, res) => {
+  res.send('Welcome to myFlix!');
+});
 
-// determine the port to listen on by checking PORT first and giving it a value
+app.get('/movies', (req, res) => {
+  res.json(movies);
+});
+
+// Gets the data about a single movie, by title
+app.get('/movies/:title', (req, res) => {
+  res.json(
+    movies.find((movie) => {
+      return movie.title === req.params.title;
+    })
+  );
+});
+
+app.get('/movies/genres/:genres', (req, res) => {
+  res.send('Successful GET request returning a description of the genre');
+});
+
+app.get('/movies/directors/:name', (req, res) => {
+  res.send('Successful GET request returning a description of the Director');
+});
+
+app.post('/users', (req, res) => {
+  res.send('Registration succesful!');
+});
+
+app.put('/users/:username', (req, res) => {
+  res.send(
+    'The user: ' + req.params.username + ' ' + 'was successfully updated'
+  );
+});
+
+app.post('/users/:username/favourites/:title', (req, res) => {
+  res.send('Movie:' + req.params.title + ' ' + 'was added to favourites. ');
+});
+
+app.delete('/users/:username/favourites/:title', (req, res) => {
+  res.send(
+    'Movie:' + req.params.title + ' ' + 'has been removed from favourites'
+  );
+});
+
+app.delete('/users/:username', (req, res) => {
+  res.send('User' + req.params.username + ' ' + 'was deleted.');
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Your app is listening on port ${port}`);
