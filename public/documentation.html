@@ -1,28 +1,159 @@
-<!-- created Documentation file on my server that you want to serve to users that send a request to the “/documentation” URL -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie_API Documentation</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 2px solid black;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 8px;
+      }
+    </style>
   </head>
-
   <body>
     <h1>Documentation Page for Movie API</h1>
-    <h2>Objectiv</h2>
-    <p>
-      In this project, I will be builing the server-side component of a movie
-      database web application. This web application will provide users with
-      access to information about different movies, directors, and genres. Users
-      can sign up, update their personal info, and create lists of all their
-      favorite movies.
-    </p>
 
-    <p>
-      We will be creating a REST API using the MERN stack. (MongoDB, Express,
-      React, and Node.JS)
-    </p>
+    The web application will provide users with access to information about
+    different movies, directors, and genres. Users will be able to sign up,
+    update their personal information, and create a list of their favorite
+    movies.
+    <br />
+    <br />
 
-    <p></p>
+    <table>
+      <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>HTTP Method</th>
+        <th>URL parameters</th>
+        <th>Request body data format</th>
+        <th>Respond body data format</th>
+      </tr>
+      <tr>
+        <td>Welcome message</td>
+        <td>/</td>
+        <td>GET</td>
+        <td></td>
+        <td>None</td>
+        <td>A welcome text message</td>
+      </tr>
+      <tr>
+        <td>Get a list of all movies</td>
+        <td>/movies</td>
+        <td>GET</td>
+        <td></td>
+        <td>None</td>
+        <td>A JSON object holding data about all movies</td>
+      </tr>
+      <tr>
+        <td>
+          Get data (description, genre, director, image URL) about a single movie by title
+        </td>
+        <td>/movies/[Title]</td>
+        <td>GET</td>
+        <td>/movies/:title</td>
+        <td>None</td>
+        <td>
+          A JSON object holding data about a single movie containing a title,
+          description, genre, director, image. <br /><br />
+          Example: <br />
+          {
+            "title": "Amadeus",
+            "description": "The film follows a fictional rivalry between Mozart and Italian composer Antonio Salieri at the court of Emperor Joseph II",
+            "director": "Milos Forman",
+            "genres": [
+                " Biography",
+                "Drama",
+                "History",
+                "Music"
+            ],
+            "image": "https://www.amadeus-live.com/wp-content/uploads/2015/10/main-home-image5.jpg"
+  }<br />
+        </td>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Get data about a movie genre by name</td>
+        <td>/movies/genres/[Genre]</td>
+        <td>GET</td>
+        <td>/movies/genres/:genres</td>
+        <td>None</td>
+        <td>A JSON object holding data about the genres</td>
+      </tr>
+      <tr>
+        <td>Get data about a movie director by name</td>
+        <td>/movies/directors/[Name]</td>
+        <td>GET</td>
+        <td>/movies/directors/:name</td>
+        <td>None</td>
+        <td>A JSON object holding data about the director</td>
+      </tr>
+      <tr>
+        <td>Register new user</td>
+        <td>/users</td>
+        <td>POST</td>
+        <td></td>
+        <td>
+          A JSON object holding data about the user to create. <br />
+          
+        </td>
+        <td>
+          A JSON object holding data about the user that was added.
+        </td>
+      </tr>
+      <tr>
+        <td>Update a user information</td>
+        <td>/users/[Username]</td>
+        <td>PUT</td>
+        <td>/users/:username</td>
+        <td>
+          a JSON object holding data about the user to update. <br />
+        </td>
+        <td>
+          A text message indicating the info that was updated
+          <br />
+
+        </td>
+      </tr>
+      <tr>
+        <td>Add a movie to Favourites</td>
+        <td>/users/[Username]/favourites/[MovieTitle]</td>
+        <td>POST</td>
+        <td>/users/:username/favourites/:title</td>
+        <td>None</td>
+        <td>
+          A text message indicating whether the movies was successfully added to favourites. <br />
+
+        </td>
+      </tr>
+      <tr>
+        <td>Remove movie from Favourites</td>
+        <td>/users/[Username]/favourites/[MovieTitle]</td>
+        <td>DELETE</td>
+        <td>/users/:username/favourites/:title</td>
+        <td>None</td>
+        <td>
+          A text message indicating whether the movies was successfully removed from favourites.
+        </td>
+      </tr>
+      <tr>
+        <td>Unregister an existing user</td>
+        <td>/users/[Username]</td>
+        <td>DELETE</td>
+        <td>/users/:username</td>
+        <td>None</td>
+        <td>
+          A text message indicating whether the user was successfully deleted.
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
