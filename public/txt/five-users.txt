@@ -1,0 +1,73 @@
+var user1 = {
+  Username : "Haleh",
+  Password : "1234",
+  Email : "hgh030156@gmail.com",
+  Birthday: new Date("1977-03-23"),
+  FavoriteMovies : [],
+}
+
+db.users.insertOne(user1)
+//responce
+
+        "acknowledged" : true,
+        "insertedId" : ObjectId("609bc2633e028d5902131e9a")
+
+
+ var user2 = {
+   Username : "Baradaran",
+   Password : "5678",
+   Email : "bigbabypop@gmail.com",
+   Birthday: new Date("1977-03-23"),
+   FavoriteMovies : [],
+}
+
+db.users.insertOne(user2)
+//responce
+
+        "acknowledged" : true,
+        "insertedId" : ObjectId("609bc47d3e028d5902131e9b")
+
+ var user3 = {
+   Username : "Ghavami",
+   Password : "9876",
+   Email : "halehghavami@hotmail.com",
+   Birthday: new Date("1977-03-23"),
+   FavoriteMovies : [],
+}
+
+db.users.insertOne(user3)
+
+
+//responce
+
+"acknowledged" : true,
+        "insertedId" : ObjectId("609bc53d3e028d5902131e9c")
+
+ var user4 = {
+   Username : "Hich",
+   Password : "5432",
+   Email : "hich@hotmail.com",
+   Birthday: new Date("2002-02-02"),
+   FavoriteMovies : [],
+}
+
+db.users.insertOne(user4)
+
+//responce
+"acknowledged" : true,
+        "insertedId" : ObjectId("609bc5ca3e028d5902131e9d")
+
+
+ var user5 = {
+   Username : "Noghteh",
+   Password : "010101",
+   Email : "noghteh@hotmail.com",
+   Birthday: new Date("2001-01-01"),
+   FavoriteMovies : [],
+}
+
+db.users.insertOne(user5)
+
+//responce
+"acknowledged" : true,
+        "insertedId" : ObjectId("609bc6313e028d5902131e9e")
