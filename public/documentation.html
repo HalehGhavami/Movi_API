@@ -18,7 +18,7 @@
     </style>
   </head>
   <body>
-    <h1>Documentation Page for Movie API</h1>
+    <h1>myFlix Documentation Page</h1>
 
     The web application will provide users with access to information about
     different movies, directors, and genres. Users will be able to sign up,
@@ -35,6 +35,7 @@
         <th>URL parameters</th>
         <th>Request body data format</th>
         <th>Respond body data format</th>
+        <th>Examples</th>
       </tr>
       <tr>
         <td>Welcome message</td>
@@ -43,6 +44,7 @@
         <td></td>
         <td>None</td>
         <td>A welcome text message</td>
+        <td></td>
       </tr>
       <tr>
         <td>Get a list of all movies</td>
@@ -51,50 +53,72 @@
         <td></td>
         <td>None</td>
         <td>A JSON object holding data about all movies</td>
+      <td></td>
       </tr>
       <tr>
         <td>
-          Get data (description, genre, director, image URL) about a single movie by title
+          Get data (Title, Description, Genre, Director, image URL and whether it’s featured or not.) 
         </td>
         <td>/movies/[Title]</td>
         <td>GET</td>
-        <td>/movies/:title</td>
+        <td>/movies/:Title</td>
         <td>None</td>
         <td>
-          A JSON object holding data about a single movie containing a title,
-          description, genre, director, image. <br /><br />
-          Example: <br />
-          {
-            "title": "Amadeus",
-            "description": "The film follows a fictional rivalry between Mozart and Italian composer Antonio Salieri at the court of Emperor Joseph II",
-            "director": "Milos Forman",
-            "genres": [
-                " Biography",
-                "Drama",
-                "History",
-                "Music"
-            ],
-            "image": "https://www.amadeus-live.com/wp-content/uploads/2015/10/main-home-image5.jpg"
-  }<br />
+          A JSON object holding data about a single movie containing a Title,
+          Description, Genre, Director, Image. <br /><br />
+         <td class="example">
+          
+  <span>Title:</span> "Amadeus" <br>
+  <span>Description:</span> "The film follows a fictional rivalry between ..."<br>
+  <span>Genre:</span> { <br>
+    <span>Name:</span> "Drama"<br>
+    <span>Description:</span> "Drama film is a genre that relies on the ..."
+  }<br>
+  <span>Director:</span> { <br>
+    <span>Name:</span> "Milos Forman"<br>
+    <span>Bio: </span>"Jan Tomáš Miloš Forman was a Czech-American film director,..."<br>
+    <span>Birth: </span>"1932"<br>
+    <span>Death</span>: "2018"<br>
+  }<br>
+  <span>ImagePath:</span> "Amadeus.png"<br>
+  <span>Featured:</span> true
+
+</td>
+<br />
         </td>
         </td>
       </tr>
 
       <tr>
-        <td>Get data about a movie genre by name</td>
-        <td>/movies/genres/[Genre]</td>
+        <td>Get data about a genre by name to the user</td>
+        <td>/movies/genres/[Name]</td>
         <td>GET</td>
-        <td>/movies/genres/:genres</td>
+        <td>/movies/genres/:Name</td>
         <td>None</td>
-        <td>A JSON object holding data about the genres</td>
+        <td>A JSON object holding data about a single genre</td>
+      <td class="example">
+            
+              <span>Name:</span> “Drama”,<br>
+              <span>Description:</span> "Drama film is a genre that relies on the emotional ..." 
+            
+          </td>
       </tr>
       <tr>
         <td>Get data about a movie director by name</td>
         <td>/movies/directors/[Name]</td>
         <td>GET</td>
-        <td>/movies/directors/:name</td>
+        <td>/movies/directors/:Name</td>
         <td>None</td>
         <td>A JSON object holding data about the director</td>
+      <td class="example">
+            
+              <span>Director:</span> {<br>
+                <span>Name:</span> "JQuentin Tarantino"<br>
+                <span>Bio:</span> "JQuentin Jerome Tarantino is an American film director..."<br>
+                <span>Birth:</span> "1963",<br>
+              }
+            
+          </td>
       </tr>
       <tr>
         <td>Register new user</td>
@@ -107,52 +131,63 @@
         </td>
         <td>
           A JSON object holding data about the user that was added.
+        <td class="example">
+            
+              <span>Username:</span> "Haleh",<br>
+              <span>Password:</span> "1234",<br>
+              <span>Email:</span> "hgh030156@gmail.com",<br>
+              <span>Birthday:</span> "1977-03-23",<br>
+              <span>FavoriteMovies:</span> [...,...]
+            
+          </td>
         </td>
       </tr>
       <tr>
         <td>Update a user information</td>
         <td>/users/[Username]</td>
         <td>PUT</td>
-        <td>/users/:username</td>
+        <td>/users/:Username</td>
         <td>
-          a JSON object holding data about the user to update. <br />
+          A JSON object holding data about the user to update. <br>
         </td>
         <td>
-          A text message indicating the info that was updated
-          <br />
+A JSON object holding data that was updated.<br>          
 
         </td>
+        <td></td>
       </tr>
       <tr>
-        <td>Add a movie to Favourites</td>
-        <td>/users/[Username]/favourites/[MovieTitle]</td>
+        <td>Add a movie to Favorites</td>
+        <td>/users/[Username]/FavoriteMovies/[MovieTitle]</td>
         <td>POST</td>
-        <td>/users/:username/favourites/:title</td>
+        <td>/users/:Username/FavoriteMovies/:MovieTitle</td>
         <td>None</td>
         <td>
-          A text message indicating whether the movies was successfully added to favourites. <br />
+          A JSON object holding data about favorite movies of a user. <br>
 
         </td>
+        <td></td>
       </tr>
       <tr>
-        <td>Remove movie from Favourites</td>
-        <td>/users/[Username]/favourites/[MovieTitle]</td>
+        <td>Remove movie from Favorites</td>
+        <td>/users/[Username]/FavoriteMovies/[MovieTitle]</td>
         <td>DELETE</td>
-        <td>/users/:username/favourites/:title</td>
+        <td>/users/:username/FavoriteMovies/:MovieTitle</td>
         <td>None</td>
         <td>
-          A text message indicating whether the movies was successfully removed from favourites.
-        </td>
+         A JSON object holding data about updated favorite movies of a user.</td>
+         <td></td>
       </tr>
       <tr>
         <td>Unregister an existing user</td>
         <td>/users/[Username]</td>
         <td>DELETE</td>
-        <td>/users/:username</td>
+        <td>/users/:Username</td>
         <td>None</td>
         <td>
           A text message indicating whether the user was successfully deleted.
         </td>
+        <td></td>
       </tr>
     </table>
   </body>
