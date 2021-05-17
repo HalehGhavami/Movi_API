@@ -71,3 +71,7 @@ db.users.insertOne(user5)
 //responce
 "acknowledged" : true,
         "insertedId" : ObjectId("609bc6313e028d5902131e9e")
+
+
+
+        db.users.deleteOne( {"_id": ObjectId("609bc47d3e028d5902131e9b")});
