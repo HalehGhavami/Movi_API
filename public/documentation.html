@@ -18,177 +18,186 @@
     </style>
   </head>
   <body>
-    <h1>myFlix Documentation Page</h1>
+    
 
-    The web application will provide users with access to information about
+    <p>The web application will provide users with access to information about
     different movies, directors, and genres. Users will be able to sign up,
     update their personal information, and create a list of their favorite
-    movies.
-    <br />
-    <br />
+    movies.</p>
 
     <table>
+      <h1>myFlix Endpoint Documentation</h1>
+      <thead>
       <tr>
-        <th>Request</th>
+        <th>Description</th>
+        <th>Method</th>
         <th>URL</th>
-        <th>HTTP Method</th>
-        <th>URL parameters</th>
-        <th>Request body data format</th>
-        <th>Respond body data format</th>
+        <th>Query Parameter</th>
+        <th>Body of Request</th>
+        <th>Body of Response</th>
         <th>Examples</th>
       </tr>
-      <tr>
+      </thead>
+      <tbody>
+
+        <!-- <tr>
         <td>Welcome message</td>
+        <td>GET</td>
         <td>/</td>
-        <td>GET</td>
-        <td></td>
         <td>None</td>
-        <td>A welcome text message</td>
-        <td></td>
+        <td>None</td>
+        <td>None</td>
+        <td>Welcome to myFlix!</td>
       </tr>
+
       <tr>
-        <td>Get a list of all movies</td>
-        <td>/movies</td>
+        <td>Return the documentation html</td>
         <td>GET</td>
+        <td>/documentation.html</td>
+        <td>None</td>
+        <td>None</td>
+        <td>A response containing the documentation html</td>
         <td></td>
+      </tr> -->
+
+      <tr>
+        <td>Return a list of all the movies to the users</td>
+        <td>GET</td>
+        <td>/movies</td>
+        <td>None</td>
         <td>None</td>
         <td>A JSON object holding data about all movies</td>
-      <td></td>
-      </tr>
-      <tr>
-        <td>
-          Get data (Title, Description, Genre, Director, image URL and whether it’s featured or not.) 
+        <td><em><br><p>{
+            <span>Genre:</span> {<br>
+            <span>Name:</span> String,<br>
+            <span>Description:</span> String,<br>
+            },<br>
+            <span>Director:</span> {<br>
+            <span>Name:</span> String,<br>
+            <span>Bio:</span> String,<br>
+            <span>Birth:</span> Integer,<br>
+            <span>Death</span> Integer<br>
+            },<br>
+            <span>Actors:</span> [],<br>
+            <span>_id:</span> Integer,<br>
+            <span>Title:</span>: String,<br>
+            <span>Description:</span> String,<br>
+            <span>ImagePath:</span> "https:..",<br>
+            <span>Featured:</span> Boolean<br>
+        }</p>
+            </em>
         </td>
-        <td>/movies/[Title]</td>
+      </tr>
+
+      <tr>
+        <td>Return data about a single movie by title</td>
         <td>GET</td>
+        <td>/movies/[Title]</td>
         <td>/movies/:Title</td>
         <td>None</td>
-        <td>
-          A JSON object holding data about a single movie containing a Title,
-          Description, Genre, Director, Image. <br /><br />
-         <td class="example">
-          
-  <span>Title:</span> "Amadeus" <br>
-  <span>Description:</span> "The film follows a fictional rivalry between ..."<br>
-  <span>Genre:</span> { <br>
-    <span>Name:</span> "Drama"<br>
-    <span>Description:</span> "Drama film is a genre that relies on the ..."
-  }<br>
-  <span>Director:</span> { <br>
-    <span>Name:</span> "Milos Forman"<br>
-    <span>Bio: </span>"Jan Tomáš Miloš Forman was a Czech-American film director,..."<br>
-    <span>Birth: </span>"1932"<br>
-    <span>Death</span>: "2018"<br>
-  }<br>
-  <span>ImagePath:</span> "Amadeus.png"<br>
-  <span>Featured:</span> true
-
-</td>
-<br />
-        </td>
-        </td>
+        <td>A JSON object holding data about a single movie </td>
+        <td><em><br><p>{ <br> 'Genre': { <br> 'Name': 'Drama', <br> 'Description':'About Drama' <br>}, <br> 'Director': {<br> 'Name': 'Milos Forman', <br> 'Bio': 'About Milos Forman', <br> 'Birth': '1932' <br>, <br> 'Death': '2018'  <br> }, <br> 'Actors':[],<br>'_id': 'Number', <br> 'title': 'Amadeus', <br> 'Description': 'About the Film'</p></em></td>
       </tr>
 
       <tr>
-        <td>Get data about a genre by name to the user</td>
-        <td>/movies/genres/[Name]</td>
+        <td>Return data about a genre (description) by name/title (e.g., 'Drama')</td>
         <td>GET</td>
-        <td>/movies/genres/:Name</td>
+        <td>/movies/genres/[Genre]</td>
+        <td>/movies/genres/:Genre</td>
         <td>None</td>
         <td>A JSON object holding data about a single genre</td>
-      <td class="example">
-            
+        <td ><em><br><p>
               <span>Name:</span> “Drama”,<br>
-              <span>Description:</span> "Drama film is a genre that relies on the emotional ..." 
-            
-          </td>
+              <span>Description:</span> "Drama film is a genre that relies on the emotional ..."  </p></em> 
+        </td>
       </tr>
       <tr>
-        <td>Get data about a movie director by name</td>
-        <td>/movies/directors/[Name]</td>
+        <td>Return data about a director (bio, birth year, death year) by name</td>
         <td>GET</td>
-        <td>/movies/directors/:Name</td>
+        <td>/movies/director/[Name]</td>
+        <td>/movies/director/:Name</td>
         <td>None</td>
         <td>A JSON object holding data about the director</td>
-      <td class="example">
+      <td> <em><br><p>
             
-              <span>Director:</span> {<br>
+                <span>Director:</span> {<br>
                 <span>Name:</span> "JQuentin Tarantino"<br>
                 <span>Bio:</span> "JQuentin Jerome Tarantino is an American film director..."<br>
                 <span>Birth:</span> "1963",<br>
-              }
-            
+              }</p> </em> 
           </td>
       </tr>
       <tr>
-        <td>Register new user</td>
-        <td>/users</td>
+        <td>Allow new users to register</td>
         <td>POST</td>
-        <td></td>
+        <td>/users</td>
+        <td>None</td>
         <td>
-          A JSON object holding data about the user to create. <br />
-          
+          A JSON object holding data about the user to create. <br>
+          <p>{ <br> Username: string (required)<br> Password: string (required)<br> Email: String (required)<br> Birthday: date <br> } </p>
         </td>
         <td>
-          A JSON object holding data about the user that was added.
-        <td class="example">
-            
+          A JSON object holding data about the user that was added. <br>
+        <td>
+            <em><p>{
+              <span>FavoriteMovies: [ movieByIDs]
+              ],</span>
+              <span>_id: Number</span>
               <span>Username:</span> "Haleh",<br>
               <span>Password:</span> "1234",<br>
               <span>Email:</span> "hgh030156@gmail.com",<br>
               <span>Birthday:</span> "1977-03-23",<br>
-              <span>FavoriteMovies:</span> [...,...]
-            
+            }</p></em>
           </td>
         </td>
       </tr>
+
       <tr>
-        <td>Update a user information</td>
-        <td>/users/[Username]</td>
+        <td>Allow users to update thier info such as their username, email address or Birthday</td>
         <td>PUT</td>
+        <td>/users/[Username]</td>
         <td>/users/:Username</td>
         <td>
           A JSON object holding data about the user to update. <br>
+       
         </td>
-        <td>
-A JSON object holding data that was updated.<br>          
-
+        <td>A JSON object holding data that was updated.<br>          
         </td>
-        <td></td>
+        <td><em><p>{ <br> Username: string <br> Password: String <br> Email: String <br> Birhdat: Date} </p></em></td>
       </tr>
       <tr>
-        <td>Add a movie to Favorites</td>
-        <td>/users/[Username]/FavoriteMovies/[MovieTitle]</td>
+        <td>Allow users to add a movie to their list of favorites</td>
         <td>POST</td>
-        <td>/users/:Username/FavoriteMovies/:MovieTitle</td>
+        <td>/users/[Username]/movies/[MovieID]</td>
+        <td>/users/:Username/movies/:MovieID</td>
         <td>None</td>
         <td>
-          A JSON object holding data about favorite movies of a user. <br>
-
+          A JSON object holding data about the user with movies on favorite list. <br>
         </td>
         <td></td>
       </tr>
       <tr>
-        <td>Remove movie from Favorites</td>
-        <td>/users/[Username]/FavoriteMovies/[MovieTitle]</td>
-        <td>DELETE</td>
-        <td>/users/:username/FavoriteMovies/:MovieTitle</td>
+        <td>Allow users to remove a movie from their list of favorites</td>
+         <td>DELETE</td>
+        <td>/users/[Username]/movies/[MovieID]</td>
+        <td>/users/[Username]/movies/:MovieID</td>
         <td>None</td>
         <td>
-         A JSON object holding data about updated favorite movies of a user.</td>
+         A JSON object holding data about the updated favorite list.</td>
          <td></td>
       </tr>
       <tr>
-        <td>Unregister an existing user</td>
-        <td>/users/[Username]</td>
+        <td>Allow existing users to deregister<</td>
         <td>DELETE</td>
+        <td>/users/[Username]</td>
         <td>/users/:Username</td>
         <td>None</td>
         <td>
-          A text message indicating whether the user was successfully deleted.
+          A text message indicating that the user was deleted <br>
         </td>
         <td></td>
       </tr>
+      </tbody>
     </table>
   </body>
 </html>
