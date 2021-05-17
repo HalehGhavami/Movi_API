@@ -8,12 +8,10 @@ const morgan = require('morgan');
 const app = express();
 // import mongoose
 const mongoose = require('mongoose');
-const Models = require('./models.js');
+const Models = require('./models/models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
-// const Genres = Models.Genre;
-// const Directors = Models.Director;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
@@ -26,6 +24,7 @@ app.use(bodyParser.json());
 //log requests to server
 app.use(morgan('common'));
 
+//using static assets
 app.use(express.static('public'));
 
 // error-handling middleware function that will log all application-level errors to the terminal.
@@ -43,7 +42,7 @@ app.get('/', (req, res) => {
 app.get('/movies', (req, res) => {
   Movies.find()
     .then((movies) => {
-      res.status(201).json(movies);
+      res.status(200).json(movies);
     })
     .catch((err) => {
       console.error(err);
@@ -55,7 +54,7 @@ app.get('/movies', (req, res) => {
 app.get('/movies/:Title', (req, res) => {
   Movies.findOne({ Title: req.params.Title })
     .then((movie) => {
-      res.json(movie);
+      res.status(200).json(movie);
     })
     .catch((err) => {
       console.error(err);
@@ -67,7 +66,7 @@ app.get('/movies/:Title', (req, res) => {
 app.get('/movies/genres/:Genre', (req, res) => {
   Movies.findOne({ 'Genre.Name': req.params.Genre })
     .then((genre) => {
-      res.status(201).json(genre.Genre);
+      res.status(200).json(genre.Genre);
     })
     .catch((err) => {
       console.error(err);
@@ -79,7 +78,7 @@ app.get('/movies/genres/:Genre', (req, res) => {
 app.get('/movies/director/:Name', (req, res) => {
   Movies.findOne({ 'Director.Name': req.params.Name })
     .then((director) => {
-      res.status(201).json(director.Director);
+      res.status(200).json(director.Director);
     })
     .catch((err) => {
       console.error(err);
@@ -91,7 +90,7 @@ app.get('/movies/director/:Name', (req, res) => {
 app.get('/users', (req, res) => {
   Users.find()
     .then((users) => {
-      res.status(201).json(users);
+      res.status(200).json(users);
     })
     .catch((err) => {
       console.error(err);
@@ -100,20 +99,12 @@ app.get('/users', (req, res) => {
 });
 
 //Add a user
-/* We’ll expect JSON in this format
-{
-  ID: Integer,
-  Username: String,
-  Password: String,
-  Email: String,
-  Birthday: Date
-}*/
 app.post('/users', (req, res) => {
   // check if a user with the username provided by the client already exists
   Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
+        return res.status(409).send(req.body.Username + 'already exists');
       } else {
         Users.create({
           Username: req.body.Username,
@@ -231,7 +222,7 @@ app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
-        res.status(400).send(req.params.Username + ' was not found');
+        res.status(404).send(req.params.Username + ' was not found');
       } else {
         res.status(200).send(req.params.Username + ' was deleted.');
       }
@@ -241,18 +232,6 @@ app.delete('/users/:Username', (req, res) => {
       res.status(500).send('Error: ' + err);
     });
 });
-
-/*
-   access documentation.html using express.static
-app.use('/documenation', express.static('public'));
-   error handling
-app.use(err, req, res, next) => {
-console.error(err.stack);
-res.status(500).send('Error');
-}  
-  listen on port
-app.listen(8080, () => console.log('Your app is listening on port 8080'));
-*/
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
