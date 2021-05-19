@@ -1,5 +1,5 @@
 const passport = require('passport'),
-  LocalStrategy = require('passport-local'),
+  LocalStrategy = require('passport-local').Strategy,
   Models = require('./models/models.js'),
   passportJWT = require('passport-jwt');
 
@@ -14,7 +14,7 @@ passport.use(
       passwordField: 'Password',
     },
     (username, password, callback) => {
-      console.log(username + ' ' + password);
+      console.log(username + '  ' + password);
       Users.findOne({ Username: username }, (error, user) => {
         if (error) {
           console.log(error);
@@ -27,6 +27,7 @@ passport.use(
             message: 'Incorrect username or password.',
           });
         }
+
         console.log('finished');
         return callback(null, user);
       });
@@ -41,9 +42,13 @@ passport.use(
       secretOrKey: 'your_jwt_secret',
     },
     (jwtPayload, callback) => {
-      return Users.findById(jwtPayload._id).then((user) => {
-        return callback(error);
-      });
+      return Users.findById(jwtPayload._id)
+        .then((user) => {
+          return callback(null, user);
+        })
+        .catch((error) => {
+          return callback(error);
+        });
     }
   )
 );
