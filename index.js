@@ -20,6 +20,12 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 
 //  middleware
 app.use(bodyParser.json());
+// placed AFTER bodyParser
+//app argument is passing here to ensures that Express is available in  “auth.js” file as well.
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
 
 //log requests to server
 app.use(morgan('common'));
