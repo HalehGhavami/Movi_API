@@ -3,6 +3,9 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   uuid = require('uuid');
 
+const cors = require('cors');
+app.use(cors());
+
 // import morgan into my package
 const morgan = require('morgan');
 const app = express();
@@ -22,10 +25,10 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 app.use(bodyParser.json());
 // placed AFTER bodyParser
 //app argument is passing here to ensures that Express is available in  “auth.js” file as well.
-let auth = require('./auth')(app);
+let auth = require('./middleware/auth')(app);
 
 const passport = require('passport');
-require('./passport');
+require('./helpers/passport');
 
 //log requests to server
 app.use(morgan('common'));
