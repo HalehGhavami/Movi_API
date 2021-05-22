@@ -43,15 +43,9 @@ app.use(morgan('common'));
 //using static assets
 app.use(express.static('public'));
 
-// error-handling middleware function that will log all application-level errors to the terminal.
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
 // default text responce when at /
 app.get('/', (req, res) => {
-  res.send('Welcome to myFlix!');
+  res.send('Welcome to API MyFlix!');
 });
 
 //return JSON object when at /movies
@@ -309,6 +303,13 @@ app.delete(
     );
   }
 );
+
+// error-handling middleware function that will log all application-level errors to the terminal.
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
