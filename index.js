@@ -1,19 +1,20 @@
 // import packages
 const express = require('express'),
-  bodyParser = require('body-parser'),
-  uuid = require('uuid');
+  morgan = require('morgan');
 
+const app = express();
+
+//Cors access (allowed domains)
 const cors = require('cors');
 app.use(cors());
 
 const { check, validationResult } = require('express-validator');
 
-// import morgan into my package
-const morgan = require('morgan');
-const app = express();
-// import mongoose
-const mongoose = require('mongoose');
-const Models = require('./models/models.js');
+//Integrating Mongoose with the REST API
+const mongoose = require('mongoose'),
+  Models = require('./models.js'),
+  passport = require('passport');
+require('./passport');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -29,49 +30,42 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useUnifiedTopology: true,
 });
 
-//  middleware
+const bodyParser = require('body-parser');
+const { Router } = require('express');
 app.use(bodyParser.json());
-// placed AFTER bodyParser
-//app argument is passing here to ensures that Express is available in  “auth.js” file as well.
-let auth = require('./middleware/auth')(app);
 
-const passport = require('passport');
-require('./helpers/passport');
+let auth = require('./auth')(app);
 
-//log requests to server
+// const passport = require('passport');
+// require('./passport');
+
+//logs into the Terminal
 app.use(morgan('common'));
 
-//using static assets
+//Return the documentation html
 app.use(express.static('public'));
-
-// error-handling middleware function that will log all application-level errors to the terminal.
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+app.get('/documentation', (req, res) => {
+  res.sendFile('public/documentation.html', { root: __dirname });
 });
 
-// default text responce when at /
+// GET the starting request
 app.get('/', (req, res) => {
-  res.send('Welcome to myFlix!');
+  res.send('Welcome to API myFlix!');
 });
 
-//return JSON object when at /movies
-app.get(
-  '/movies',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Movies.find()
-      .then((movies) => {
-        res.status(200).json(movies);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      });
-  }
-);
+//Return a list of ALL movies to the user
+app.get('/movies', function (req, res) {
+  Movies.find()
+    .then(function (movies) {
+      res.status(200).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
-// GETS JSON movie info when looking for specific title
+// GETS JSON movie info by title
 app.get(
   '/movies/:Title',
   passport.authenticate('jwt', { session: false }),
@@ -111,38 +105,6 @@ app.get(
     Movies.findOne({ 'Director.Name': req.params.Name })
       .then((director) => {
         res.status(200).json(director.Director);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      });
-  }
-);
-
-// Get all users
-app.get(
-  '/users',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.find()
-      .then((users) => {
-        res.status(200).json(users);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      });
-  }
-);
-
-// Get a user by username
-app.get(
-  '/users/:Username',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOne({ Username: req.params.Username })
-      .then((user) => {
-        res.json(user);
       })
       .catch((err) => {
         console.error(err);
@@ -201,6 +163,55 @@ app.post(
   }
 );
 
+// Delete a user by username
+app.delete(
+  '/users/:Username',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Users.findOneAndRemove({ Username: req.params.Username })
+      .then((user) => {
+        if (!user) {
+          res.status(404).send(req.params.Username + ' was not found');
+        } else {
+          res.status(200).send(req.params.Username + ' was deleted.');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
+
+// Get all users
+app.get('/users', (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// Get a user by username
+app.get(
+  '/users/:Username',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
+
+//Allow users to update their user info by username
 app.put(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -225,14 +236,12 @@ app.put(
       {
         $set: {
           Username: req.body.Username,
-          Password: hashedPassword,
+          Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         },
       },
-      //Third parameter
       { new: true }, // This line makes sure that the updated document is returned
-      //Fourth parameter that itself have two parameters (any errors that might have occured + represents the document that was just updated )
       (err, updatedUser) => {
         if (err) {
           console.error(err);
@@ -245,26 +254,6 @@ app.put(
   }
 );
 
-// Delete a user by username
-app.delete(
-  '/users/:Username',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Users.findOneAndRemove({ Username: req.params.Username })
-      .then((user) => {
-        if (!user) {
-          res.status(404).send(req.params.Username + ' was not found');
-        } else {
-          res.status(200).send(req.params.Username + ' was deleted.');
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
-      });
-  }
-);
-
 // Add a movie to a user's list of favorites
 app.post(
   '/users/:Username/favorites/:MovieID',
@@ -273,7 +262,7 @@ app.post(
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $push: { FavoriteMovies: req.params.MovieID },
+        $addToSet: { FavoriteMovies: req.params.MovieID },
       },
       { new: true }, // This line makes sure that the updated document is returned
       (err, updatedUser) => {
@@ -298,7 +287,7 @@ app.delete(
       {
         $pull: { FavoriteMovies: req.params.MovieID },
       },
-      { new: true }, // This line makes sure that the updated document is returned
+      { new: true },
       (err, updatedUser) => {
         if (err) {
           console.error(err);
@@ -311,6 +300,13 @@ app.delete(
   }
 );
 
+// error-handling middleware function that will log all application-level errors to the terminal.
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+//Listen for requests
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);
