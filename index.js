@@ -23,16 +23,16 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // Local Host
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// MongoDB Atlas Host
-// mongoose.connect(process.env.CONNECTION_URI, {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+
+// MongoDB Atlas Host
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(morgan('common'));
 
