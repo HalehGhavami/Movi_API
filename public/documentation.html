@@ -40,15 +40,7 @@
       </thead>
       <tbody>
 
-        <!-- <tr>
-        <td>Welcome message</td>
-        <td>GET</td>
-        <td>/</td>
-        <td>None</td>
-        <td>None</td>
-        <td>None</td>
-        <td>Welcome to myFlix!</td>
-      </tr>
+       
 
       <tr>
         <td>Return the documentation html</td>
@@ -58,10 +50,10 @@
         <td>None</td>
         <td>A response containing the documentation html</td>
         <td></td>
-      </tr> -->
+      </tr> 
 
       <tr>
-        <td>Return a list of all the movies to the users</td>
+        <td>Return a list of all the movies to the registered users</td>
         <td>GET</td>
         <td>/movies</td>
         <td>None</td>
@@ -134,15 +126,15 @@
         <td>None</td>
         <td>
           A JSON object holding data about the user to create. <br>
-          <p>{ <br> Username: string (required)<br> Password: string (required)<br> Email: String (required)<br> Birthday: date <br> } </p>
+          <p>{ <br> Username: string (required) with Length({ min: 5 } and alphanumeric characters <br> Password: string (required) <br> Email: has to be valid String (required)<br> Birthday: date <br> } </p>
         </td>
         <td>
           A JSON object holding data about the user that was added. <br>
         <td>
             <em><p>{
               <span>FavoriteMovies: [ movieByIDs]
-              ],</span>
-              <span>_id: Number</span>
+              ,</span>
+              <span>_id: "Number"</span>
               <span>Username:</span> "Haleh",<br>
               <span>Password:</span> "1234",<br>
               <span>Email:</span> "hgh030156@gmail.com",<br>
@@ -153,17 +145,17 @@
       </tr>
 
       <tr>
-        <td>Allow users to update thier info such as their username, email address or Birthday</td>
+        <td>Allow users to update their info such as their username, email address or Birthday</td>
         <td>PUT</td>
         <td>/users/[Username]</td>
         <td>/users/:Username</td>
         <td>
-          A JSON object holding data about the user to update. <br>
+          A JSON object holding (required) data about the user to update. <br>
        
         </td>
         <td>A JSON object holding data that was updated.<br>          
         </td>
-        <td><em><p>{ <br> Username: string <br> Password: String <br> Email: String <br> Birhdat: Date} </p></em></td>
+        <td><em><p>{ <br> Username: string <br> Password: String (JWT)<br> Email: String <br> Birtday: Date} </p></em></td>
       </tr>
       <tr>
         <td>Allow users to add a movie to their list of favorites</td>
