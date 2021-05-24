@@ -8,7 +8,6 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
-
 const { check, validationResult } = require('express-validator');
 
 //Integrating Mongoose with the REST API
@@ -221,10 +220,6 @@ app.put(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-  );
-});
-
-    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -267,9 +262,9 @@ app.post(
           res.json(updatedUser);
         }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 // “Allow users to remove a movie from their list of favorites” endpoint
 app.delete(
@@ -290,12 +285,9 @@ app.delete(
           res.json(updatedUser);
         }
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    });
-});
+    );
+  }
+);
 
 // error-handling middleware function that will log all application-level errors to the terminal.
 app.use((err, req, res, next) => {
