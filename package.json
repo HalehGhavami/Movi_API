@@ -4,9 +4,7 @@
   "description": "To build the server-side component of a “movies” web application. The web\r application will provide users with access to information about different\r movies, directors, and genres. Users will be able to sign up, update their\r personal information, and create a list of their favorite movies",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -35,7 +33,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "eslint": "^7.25.0",
-    "nodemon": "^2.0.7"
+    "eslint": "^7.25.0"
   }
 }
