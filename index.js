@@ -31,7 +31,6 @@ mongoose.connect(process.env.CONNECTION_URI, {
 });
 
 const bodyParser = require('body-parser');
-const { Router } = require('express');
 app.use(bodyParser.json());
 
 let auth = require('./auth')(app);
