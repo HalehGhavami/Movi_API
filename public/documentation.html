@@ -19,14 +19,16 @@
   </head>
   <body>
     
-
-    <p>The web application will provide users with access to information about
+<h1>myFlix Endpoint Documentation </h1>
+    <h3>The web application will provide users with access to information about
     different movies, directors, and genres. Users will be able to sign up,
     update their personal information, and create a list of their favorite
-    movies.</p>
+    movies.</h3>
 
     <table>
-      <h1>myFlix Endpoint Documentation</h1>
+      
+        <h2>All “Authorization” header of the requests: Bearer token</h2>
+     
       <thead>
       <tr>
         <th>Description</th>
@@ -40,6 +42,28 @@
       </thead>
       <tbody>
 
+        <tr>
+        <td>basic HTTP authentication to authenticate users when they log into application<br><em>https://api-myflix.herokuapp.com/login?Username="String"&Password="String"</em></td>
+        <td>POST</td>
+        <td>/login</td>
+        <td>None</td>
+        <td>Username and Password</td>
+        <td>A JSON object holding data about new user + <b>JWT</b> </td>
+        <td><em><br><p>
+          <span>"user":</span><br>
+           {
+        <span>"FavoriteMovies":</span> [],<br>
+        <span>"_id":</span> "xxxxxxxxxx",<br>
+       <span> "Username":</span> "newuser",<br>
+        <span>"Password":</span>"$xx$xx$xx.xxxx",<br>
+        <span>"Email":</span> "newuser@gmail.com",<br>
+        <span>"Birthday":</span> "1111-11-11T00:00:00.000Z",<br>
+        <span>"__v":</span> 0 <br>
+    },<br>
+    <span><b>"token": "xxxxx.xxxxx.xxxx_xxx-xxx-xxx"</b></span>
+        </p>
+            </em></td>
+      </tr> 
        
 
       <tr>
@@ -129,14 +153,14 @@
           <p>{ <br> Username: string (required) with Length({ min: 5 } and alphanumeric characters <br> Password: string (required) <br> Email: has to be valid String (required)<br> Birthday: date <br> } </p>
         </td>
         <td>
-          A JSON object holding data about the user that was added. <br>
+          A JSON object holding data about the user that was added + <b>hashed password</b> <br>
         <td>
             <em><p>{
               <span>FavoriteMovies: [ movieByIDs]
               ,</span>
               <span>_id: "Number"</span>
               <span>Username:</span> "Haleh",<br>
-              <span>Password:</span> "1234",<br>
+              <span>Password:</span> "$xx$xx$xxx.xxxxxx",<br>
               <span>Email:</span> "hgh030156@gmail.com",<br>
               <span>Birthday:</span> "1977-03-23",<br>
             }</p></em>
