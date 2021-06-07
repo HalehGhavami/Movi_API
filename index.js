@@ -57,6 +57,18 @@ app.get('/documentation', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/documentation.html'));
 });
 
+// Get all users
+app.get('/users', (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
 //Return a list of ALL movies to the user
 app.get(
   '/movies',
