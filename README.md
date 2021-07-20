@@ -1,5 +1,9 @@
 # movie_API
 
+<p align="center">
+  <img src="img/mongoDB-CRUD.png" width="520">
+  </p>
+  
 ### Objective
 
 To build the **server-side** component of a “movies” **web application**. The web
