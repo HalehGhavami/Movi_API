@@ -1,7 +1,7 @@
 # movie_API
 
 <p align="center">
-  <img src="img/mongoDB-CRUD.png" width="520">
+  <img src="img/mongoDB.png" width="520">
   </p>
   
 ### Objective
