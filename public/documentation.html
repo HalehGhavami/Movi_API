@@ -169,7 +169,7 @@
       </tr>
 
       <tr>
-        <td>Allow users to update their info such as their username, email address or Birthday</td>
+        <td>Allow users to update their info such as their username, email address or birthday</td>
         <td>PUT</td>
         <td>/users/[Username]</td>
         <td>/users/:Username</td>
@@ -178,6 +178,18 @@
        
         </td>
         <td>A JSON object holding data that was updated.<br>          
+        </td>
+        <td><em><p>{ <br> Username: string <br> Password: String (JWT)<br> Email: String <br> Birtday: Date} </p></em></td>
+      </tr>
+      <tr>
+        <td>Allow users to read their info such as their username, email address or birthday</td>
+        <td>GET</td>
+        <td>/users/[Username]</td>
+        <td>/users/:Username</td>
+        <td>
+         None
+        </td>
+        <td>A JSON object holding data about the user.<br>          
         </td>
         <td><em><p>{ <br> Username: string <br> Password: String (JWT)<br> Email: String <br> Birtday: Date} </p></em></td>
       </tr>
@@ -202,8 +214,19 @@
          A JSON object holding data about the updated favorite list.</td>
          <td></td>
       </tr>
+       <tr>
+        <td>Get their list of favorites</td>
+        <td>GET</td>
+        <td>/users/[Username]/favorites</td>
+        <td>/users/:Username/favorites</td>
+        <td>None</td>
+        <td>
+          A JSON object holding movies on favorite list. <br>
+        </td>
+        <td></td>
+      </tr>
       <tr>
-        <td>Allow existing users to deregister<</td>
+        <td>Allow existing users to deregister</td>
         <td>DELETE</td>
         <td>/users/[Username]</td>
         <td>/users/:Username</td>
